@@ -1,2 +1,10 @@
-# instaloderps-bot
-Free Telegram bot for downloading Instagram reels, posts, photos, and videos instantly.
+# Instagram Downloader Telegram Bot
+
+A Telegram bot that downloads public Instagram reels and posts using yt-dlp.
+
+## Features
+
+- Public Instagram Reel Download
+- Public Instagram Post Download
+- Telegram Bot
+- Free Deploy on Render
