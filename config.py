@@ -1,6 +1,6 @@
 import os
 
-BOT_TOKEN = os.getenv("8982070912:AAEoD798WuQfXSgKU-cFuZH0Q5dIkmpnlvg")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 DOWNLOAD_DIR = "downloads"
 
