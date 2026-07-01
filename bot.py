@@ -48,7 +48,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 except Exception as e:
     await msg.edit_text(f"❌ Error: {str(e)}")
 
-
 def main():
     if not BOT_TOKEN:
         raise ValueError("BOT_TOKEN is not set!")
