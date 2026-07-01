@@ -29,23 +29,24 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = await update.message.reply_text("⏳ Downloading...")
 
     try:
-        file_path = download_instagram(text)
+    file_path = download_instagram(text)
 
-        if not file_path:
-            await msg.edit_text("❌ Download failed.")
-            return
-          if file_path.lower().endswith((".mp4", ".mov", ".mkv", ".webm")):
-            with open(file_path, "rb") as video:
-                await update.message.reply_video(video=video)
-        else:
-            with open(file_path, "rb") as photo:
-                await update.message.reply_photo(photo=photo)
+    if not file_path:
+        await msg.edit_text("❌ Download failed.")
+        return
 
-        os.remove(file_path)
-        await msg.delete()
+    if file_path.lower().endswith((".mp4", ".mov", ".mkv", ".webm")):
+        with open(file_path, "rb") as video:
+            await update.message.reply_video(video=video)
+    else:
+        with open(file_path, "rb") as photo:
+            await update.message.reply_photo(photo=photo)
 
-    except Exception as e:
-        await msg.edit_text(f"❌ Error: {str(e)}")
+    os.remove(file_path)
+    await msg.delete()
+
+except Exception as e:
+    await msg.edit_text(f"❌ Error: {str(e)}")
 
 
 def main():
