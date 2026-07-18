@@ -1,28 +1,34 @@
-import os
-import uuid
-import yt_dlp
+import requests
 
-DOWNLOAD_FOLDER = "downloads"
-
-os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
+API_URL = "https://co.wuk.sh/api/json"
 
 def download_instagram(url):
-    unique_name = str(uuid.uuid4())
-
-    output_template = os.path.join(DOWNLOAD_FOLDER, f"{unique_name}.%(ext)s")
-
-    ydl_opts = {
-        "outtmpl": output_template,
-        "quiet": True,
-        "noplaylist": True,
-        "merge_output_format": "mp4",
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
     }
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+    payload = {
+        "url": url
+    }
 
-    for file in os.listdir(DOWNLOAD_FOLDER):
-        if file.startswith(unique_name):
-            return os.path.join(DOWNLOAD_FOLDER, file)
+    response = requests.post(API_URL, headers=headers, json=payload)
 
-    return None
+    if response.status_code != 200:
+        return None
+
+    data = response.json()
+
+    if data.get("status") != "success":
+        return None
+
+    download_url = data.get("url")
+
+    file = requests.get(download_url)
+
+    filename = "instagram_download.mp4"
+
+    with open(filename, "wb") as f:
+        f.write(file.content)
+
+    return filename
